@@ -8,12 +8,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SilverBankAccountTest {
 
-    public static final int STANDARD_DEPOSIT_AMOUNT = 1000;
+    private static final int STANDARD_DEPOSIT_AMOUNT = 1000;
+    private static final int MAX_WITHDRAW_OVERDRAFT = 0;
+    private static final int WITHDRAW_FEE_AMOUNT = 1;
     private BankAccount account;
 
     @BeforeEach
     void init(){
-        this.account = new SilverBankAccount(new CoreBankAccount());
+        this.account = new FeeDecoratorBankAccount(
+                new CanWithdrawDecoratorBankAccount(
+                        new CoreBankAccount(),
+                        MAX_WITHDRAW_OVERDRAFT
+                ),
+                WITHDRAW_FEE_AMOUNT
+        );
     }
 
     @Test
