@@ -13,4 +13,15 @@ public class BankAccountFactoryImpl implements BankAccountFactory {
         );
     }
 
+    @Override
+    public BankAccount createGoldBankAccount(final int maxWithdrawOverdraft, final int withdrawFeeAmount) {
+        return new FeeDecoratorBankAccount(
+                new CanWithdrawDecoratorBankAccount(
+                        new CoreBankAccount(),
+                        maxWithdrawOverdraft
+                ),
+                withdrawFeeAmount
+        );
+    }
+
 }
