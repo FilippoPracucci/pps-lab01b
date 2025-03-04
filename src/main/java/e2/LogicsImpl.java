@@ -15,18 +15,27 @@ public class LogicsImpl implements Logics {
         this.knight = this.randomEmptyPosition();	
     }
 
-	public LogicsImpl(final int size, final int pawnRow, final int pawnColumn) {
+	public LogicsImpl(
+			final int size,
+			final int pawnRow,
+			final int pawnColumn,
+			final int knightRow,
+			final int knightColumn
+	) {
 		this.size = size;
-		if (this.isPawnPositionLegal(pawnRow, pawnColumn)) {
-			this.pawn = new Pair<>(pawnRow, pawnColumn);
-		} else {
-			this.pawn = this.randomEmptyPosition();
-		}
-		this.knight = this.randomEmptyPosition();
+		this.pawn = randomEmptyPositionIfNotLegal(pawnRow, pawnColumn);
+		this.knight = randomEmptyPositionIfNotLegal(knightRow, knightColumn);
 	}
-	
-	private boolean isPawnPositionLegal(final int pawnRow, final int pawnColumn) {
-		return pawnRow >= 0 && pawnRow < this.size && pawnColumn >= 0 && pawnColumn < this.size;
+
+	private Pair<Integer, Integer> randomEmptyPositionIfNotLegal(final int row, final int column) {
+		if (!isPositionLegal(row, column)) {
+			return this.randomEmptyPosition();
+		}
+		return new Pair<>(row, column);
+	}
+
+	private boolean isPositionLegal(final int row, final int column) {
+		return row >= 0 && row < this.size && column >= 0 && column < this.size;
 	}
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){

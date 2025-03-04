@@ -5,20 +5,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LogicTest {
 
+    private static final int PAWN_ROW = 2;
+    private static final int PAWN_COLUMN = 1;
+    private static final int KNIGHT_ROW = 0;
+    private static final int KNIGHT_COLUMN = 0;
     private static final int BOARD_SIZE = 5;
     private Logics logics;
 
     @BeforeEach
     void init() {
-        this.logics = new LogicsImpl(BOARD_SIZE);
-    }
-
-    @Test
-    public void testIfPawnHasBeenHit() {
-        final int rowToHit = 2;
-        final int columnToHit = 2;
-        final boolean isPawInPositionToHit = this.logics.hasPawn(rowToHit, columnToHit);
-        assertEquals(isPawInPositionToHit, this.logics.hit(rowToHit, columnToHit));
+        this.logics = new LogicsImpl(BOARD_SIZE, PAWN_ROW, PAWN_COLUMN, KNIGHT_ROW, KNIGHT_COLUMN);
     }
 
     @Test
@@ -28,6 +24,22 @@ public class LogicTest {
         assertAll(
             () -> assertThrows(IndexOutOfBoundsException.class, () -> this.logics.hit(BOARD_SIZE, BOARD_SIZE)),
             () -> assertThrows(IndexOutOfBoundsException.class, () -> this.logics.hit(rowOutOfBounds, columnOutOfBounds))
+        );
+    }
+
+    @Test
+    public void testKnightIllegalMovement() {
+        final int rowToHit = 0;
+        final int columnToHit = 2;
+        assertFalse(this.logics.hit(rowToHit, columnToHit));
+    }
+
+    @Test
+    public void testPawnHitIfFixedPositionAndLegalMovement() {
+        assertAll(
+                () -> assertTrue(this.logics.hasPawn(PAWN_ROW, PAWN_COLUMN)),
+                () -> assertTrue(this.logics.hasKnight(KNIGHT_ROW, KNIGHT_COLUMN)),
+                () -> assertTrue(this.logics.hit(PAWN_ROW, PAWN_COLUMN))
         );
     }
 
