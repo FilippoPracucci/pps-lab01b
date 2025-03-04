@@ -9,11 +9,25 @@ public class LogicsImpl implements Logics {
 	private final Random random = new Random();
 	private final int size;
 	 
-    public LogicsImpl(int size){
+    public LogicsImpl(final int size){
     	this.size = size;
         this.pawn = this.randomEmptyPosition();
         this.knight = this.randomEmptyPosition();	
     }
+
+	public LogicsImpl(final int size, final int pawnRow, final int pawnColumn) {
+		this.size = size;
+		if (this.isPawnPositionLegal(pawnRow, pawnColumn)) {
+			this.pawn = new Pair<>(pawnRow, pawnColumn);
+		} else {
+			this.pawn = this.randomEmptyPosition();
+		}
+		this.knight = this.randomEmptyPosition();
+	}
+	
+	private boolean isPawnPositionLegal(final int pawnRow, final int pawnColumn) {
+		return pawnRow >= 0 && pawnRow < this.size && pawnColumn >= 0 && pawnColumn < this.size;
+	}
     
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
@@ -22,7 +36,7 @@ public class LogicsImpl implements Logics {
     }
     
 	@Override
-	public boolean hit(int row, int col) {
+	public boolean hit(final int row, final int col) {
 		if (row<0 || col<0 || row >= this.size || col >= this.size) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -37,12 +51,12 @@ public class LogicsImpl implements Logics {
 	}
 
 	@Override
-	public boolean hasKnight(int row, int col) {
+	public boolean hasKnight(final int row, final int col) {
 		return this.knight.equals(new Pair<>(row,col));
 	}
 
 	@Override
-	public boolean hasPawn(int row, int col) {
+	public boolean hasPawn(final int row, final int col) {
 		return this.pawn.equals(new Pair<>(row,col));
 	}
 }
