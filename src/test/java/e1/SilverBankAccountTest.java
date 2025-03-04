@@ -1,6 +1,5 @@
 package e1;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +11,7 @@ public class SilverBankAccountTest extends AbstractBankAccountTest {
 
     @Override
     protected BankAccount createBankAccount() {
-        return bankAccountFactory.createSilverBankAccount(
+        return this.bankAccountFactory.createSilverBankAccount(
                 MAX_WITHDRAW_OVERDRAFT,
                 WITHDRAW_FEE_AMOUNT
         );
