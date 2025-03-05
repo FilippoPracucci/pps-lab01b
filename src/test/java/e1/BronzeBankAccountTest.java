@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BronzeBankAccountTest extends AbstractBankAccountTest {
 
-    private static final int MAX_WITHDRAW_OVERDRAFT = 0;
     private static final int WITHDRAW_FEE_AMOUNT_IF_CONDITION_TRUE = 0;
     private static final int WITHDRAW_FEE_AMOUNT_IF_CONDITION_FALSE = 1;
     private static final int WITHDRAW_FEE_TURNING_POINT = 100;
@@ -17,12 +16,7 @@ public class BronzeBankAccountTest extends AbstractBankAccountTest {
 
     @Override
     protected BankAccount createBankAccount() {
-        return this.bankAccountFactory.createBronzeBankAccount(
-                MAX_WITHDRAW_OVERDRAFT,
-                withdrawFeeCondition,
-                WITHDRAW_FEE_AMOUNT_IF_CONDITION_TRUE,
-                WITHDRAW_FEE_AMOUNT_IF_CONDITION_FALSE
-        );
+        return this.bankAccountFactory.createBronzeBankAccount();
     }
 
     @Test

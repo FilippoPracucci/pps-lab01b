@@ -6,15 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SilverBankAccountTest extends AbstractBankAccountTest {
 
-    private static final int MAX_WITHDRAW_OVERDRAFT = 0;
     private static final int WITHDRAW_FEE_AMOUNT = 1;
 
     @Override
     protected BankAccount createBankAccount() {
-        return this.bankAccountFactory.createSilverBankAccount(
-                MAX_WITHDRAW_OVERDRAFT,
-                WITHDRAW_FEE_AMOUNT
-        );
+        return this.bankAccountFactory.createSilverBankAccount();
     }
 
     @Test

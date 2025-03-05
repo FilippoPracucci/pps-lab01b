@@ -6,15 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GoldBankAccountTest extends AbstractBankAccountTest {
 
-    private static final int MAX_WITHDRAW_OVERDRAFT = 500;
-    private static final int WITHDRAW_FEE_AMOUNT = 0;
-
     @Override
     protected BankAccount createBankAccount() {
-        return this.bankAccountFactory.createGoldBankAccount(
-                MAX_WITHDRAW_OVERDRAFT,
-                WITHDRAW_FEE_AMOUNT
-        );
+        return this.bankAccountFactory.createGoldBankAccount();
     }
 
     @Test
