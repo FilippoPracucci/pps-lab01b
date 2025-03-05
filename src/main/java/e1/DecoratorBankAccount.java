@@ -19,7 +19,7 @@ public class DecoratorBankAccount implements BankAccount {
     }
 
     @Override
-    public void withdraw(int amount) {
+    public void withdraw(final int amount) {
         this.bankAccount.withdraw(amount);
     }
 }
