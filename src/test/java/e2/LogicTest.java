@@ -3,7 +3,7 @@ package e2;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LogicTest {
+public abstract class LogicTest {
 
     private static final int PAWN_ROW = 2;
     private static final int PAWN_COLUMN = 1;
@@ -28,13 +28,6 @@ public class LogicTest {
     }
 
     @Test
-    public void testKnightIllegalMovement() {
-        final int rowToHit = 0;
-        final int columnToHit = 2;
-        assertFalse(this.logics.hit(rowToHit, columnToHit));
-    }
-
-    @Test
     public void testPawnHitIfFixedPositionAndLegalMovement() {
         assertAll(
                 () -> assertTrue(this.logics.hasPawn(PAWN_ROW, PAWN_COLUMN)),
@@ -42,5 +35,8 @@ public class LogicTest {
                 () -> assertTrue(this.logics.hit(PAWN_ROW, PAWN_COLUMN))
         );
     }
+
+    @Test
+    public abstract void testKnightIllegalMovement();
 
 }
