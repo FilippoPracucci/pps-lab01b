@@ -4,14 +4,14 @@ import java.util.*;
 
 public class LogicsImpl implements Logics {
 	
-	private final Pair<Integer,Integer> pawn;
+	private final PawnLogic pawn;
 	private final KnightLogic knight;
 	private final Random random = new Random();
 	private final int size;
 	 
     public LogicsImpl(final int size){
     	this.size = size;
-        this.pawn = this.randomEmptyPosition();
+        this.pawn = new PawnLogicImpl(this.randomEmptyPosition());
         this.knight = new KnightLogicImpl(this.randomEmptyPosition());
     }
 
@@ -23,7 +23,7 @@ public class LogicsImpl implements Logics {
 			final int knightColumn
 	) {
 		this.size = size;
-		this.pawn = setNewPositionRandomIfOutOfBounds(pawnRow, pawnColumn);
+		this.pawn = new PawnLogicImpl(setNewPositionRandomIfOutOfBounds(pawnRow, pawnColumn));
 		this.knight = new KnightLogicImpl(setNewPositionRandomIfOutOfBounds(knightRow, knightColumn));
 	}
 
@@ -41,7 +41,7 @@ public class LogicsImpl implements Logics {
 	private final Pair<Integer,Integer> randomEmptyPosition(){
     	Pair<Integer,Integer> pos = new Pair<>(this.random.nextInt(size),this.random.nextInt(size));
     	// the recursive call below prevents clash with an existing pawn
-    	return this.pawn!=null && this.pawn.equals(pos) ? randomEmptyPosition() : pos;
+    	return this.pawn!=null && this.pawn.getPosition().equals(pos) ? randomEmptyPosition() : pos;
     }
     
 	@Override
@@ -49,10 +49,7 @@ public class LogicsImpl implements Logics {
 		if (this.isPositionOutOfBounds(row, col)) {
 			throw new IndexOutOfBoundsException();
 		}
-		if (this.knight.move(row, col)) {
-			return this.pawn.equals(this.knight.getPosition());
-		}
-		return false;
+		return this.knight.move(row, col) && this.pawn.hit(this.knight.getPosition());
 	}
 
 	@Override
@@ -62,6 +59,6 @@ public class LogicsImpl implements Logics {
 
 	@Override
 	public boolean hasPawn(final int row, final int col) {
-		return this.pawn.equals(new Pair<>(row,col));
+		return this.pawn.getPosition().equals(new Pair<>(row,col));
 	}
 }
