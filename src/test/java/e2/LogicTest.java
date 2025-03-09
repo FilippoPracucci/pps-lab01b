@@ -37,6 +37,6 @@ public abstract class LogicTest {
     }
 
     @Test
-    public abstract void testKnightIllegalMovement();
+    protected abstract void testKnightIllegalMovement();
 
 }
